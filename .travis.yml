@@ -5,15 +5,16 @@ env:
   - MY_CAR=Toyota
 
 before_install:
-  - docker -v
+  - echo `docker -v`
 
+# doesn't seem to do anything
 branches:
   only:
     - dev
 
 script:
   - echo $MY_CAR
-  - echo $PWD
-  - echo $PATH
+  - echo $PWD  # /home/travis/build/CharlesDoyle/practice
+  - echo $PATH  # there is a PATH variable in travis
   - echo `docker -v`
   - ./file1
