@@ -1,0 +1,8 @@
+# a Travis practice file
+language: minimal
+
+env: 
+  - MY_CAR=Toyota
+
+before_install:
+  - docker -v && docker-compose -v
