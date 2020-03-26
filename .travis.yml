@@ -6,3 +6,10 @@ env:
 
 before_install:
   - docker -v && docker-compose -v
+
+branches:
+  only:
+    - dev
+
+script:
+  - ./file1
