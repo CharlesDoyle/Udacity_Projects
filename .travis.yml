@@ -1,16 +1,19 @@
 # a Travis practice file
 language: minimal
-
+# create environment variables
 env: 
   - MY_CAR=Toyota
 
 before_install:
-  - docker -v && docker-compose -v
+  - docker -v
 
 branches:
   only:
     - dev
 
 script:
-  - echo $My_CAR
+  - echo $MY_CAR
+  - echo $PWD
+  - echo $PATH
+  - echo `docker -v`
   - ./file1
