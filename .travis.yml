@@ -12,4 +12,5 @@ branches:
     - dev
 
 script:
+  - echo $My_CAR
   - ./file1
