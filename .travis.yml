@@ -4,13 +4,17 @@ language: minimal
 env: 
   - MY_CAR=Toyota
 
+# should be a list of scripts to run before install phase
 before_install:
-  - echo `docker -v`
+  - ./script0
 
 # doesn't seem to do anything
 branches:
   only:
     - dev
+
+install:
+  - ./script1
 
 script:
   - echo $MY_CAR
