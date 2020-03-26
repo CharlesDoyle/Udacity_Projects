@@ -6,9 +6,9 @@ env:
 
 # should be a list of scripts to run before install phase
 before_install:
-  - ./script0
+  - echo 'before install'
 
-# doesn't seem to do anything
+# only the dev branch can be built
 branches:
   only:
     - dev
