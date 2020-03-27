@@ -1,24 +1,19 @@
-# a Travis practice file
 language: minimal
-# create environment variables
-env: 
-  - MY_CAR=Toyota
 
-# should be a list of scripts to run before install phase
+services: docker
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.23.2
+
 before_install:
-  - echo 'before install'
-
-# only the dev branch can be built
-branches:
-  only:
-    - dev
+  - docker -v && docker-compose -v
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
 
 install:
-  - ./script1
-
-script:
-  - echo $MY_CAR
-  - echo $PWD  # /home/travis/build/CharlesDoyle/practice
-  - echo $PATH  # there is a PATH variable in travis
-  - echo `docker -v`
-  - ./file1
+  - echo "Hello World!"
