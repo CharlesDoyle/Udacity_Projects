@@ -9,8 +9,12 @@ branches:
   - dev  # don't trigger on a dev commit
 
 env:
+  global: 
   - DOCKER_COMPOSE_VERSION=1.23.2
   - ENV_VAR='this is a practice file for Travis CI'
+  - KOPS_CLUSTER_NAME=charlie.k8s.local
+  - KOPS_STATE_STORE=s3://charlie-kops-state-store
+  - t=240
 
 # Run some commands.  
 # ls /  (to see the full directory tree of Travis)
@@ -30,6 +34,10 @@ before_install:
   - chmod +x kops-linux-amd64
   - sudo mv kops-linux-amd64 /usr/local/bin/kops
   - kops version
+  - kops get clusters
+  - kops validate cluster
+  - kubectl config current-context
+  - kops get ig
   - ls /
   - ls .
   - pwd
@@ -37,4 +45,9 @@ before_install:
 
 install:
   - echo "Hello World!"
+  - sleep 10
   - echo $ENV_VAR
+  - kops create cluster --node-count=1 --node-size=t2.medium --zones=us-west-2a
+  - kops update cluster --name ${KOPS_CLUSTER_NAME} --yes
+  - while [[ $t > 4 ]]; do sleep 30; echo 'counted 30 sec.'; t=$[t-30]; #delay
+  - kubectl apply -f udagram-app.yaml
