@@ -34,10 +34,6 @@ before_install:
   - chmod +x kops-linux-amd64
   - sudo mv kops-linux-amd64 /usr/local/bin/kops
   - kops version
-  - kops get clusters
-  - kops validate cluster
-  - kubectl config current-context
-  - kops get ig
   - ls /
   - ls .
   - pwd
@@ -47,7 +43,3 @@ install:
   - echo "Hello World!"
   - sleep 10
   - echo $ENV_VAR
-  - kops create cluster --node-count=1 --node-size=t2.medium --zones=us-west-2a
-  - kops update cluster --name ${KOPS_CLUSTER_NAME} --yes
-  - while [[ $t > 4 ]]; do sleep 30; echo 'counted 30 sec.'; t=$[t-30]; #delay
-  - kubectl apply -f udagram-app.yaml
