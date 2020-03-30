@@ -2,9 +2,20 @@ language: minimal
 
 services: docker
 
+branches:
+  only:
+  - master
+  exclude:
+  - dev  # don't trigger on a dev commit
+
 env:
   - DOCKER_COMPOSE_VERSION=1.23.2
+  - ENV_VAR='this is a practice file for Travis CI'
 
+# Run some commands.  
+# ls /  (to see the full directory tree of Travis)
+# ls .   (to see the contents of the present directory)
+# pwd   is /home/travis/build/CharlesDoyle/practice
 before_install:
   - docker -v && docker-compose -v
   - sudo rm /usr/local/bin/docker-compose
@@ -14,8 +25,16 @@ before_install:
   - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
   - chmod +x ./kubectl
   - sudo mv ./kubectl /usr/local/bin/kubectl
+  - kubectl version
+  - curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+  - chmod +x kops-linux-amd64
+  - sudo mv kops-linux-amd64 /usr/local/bin/kops
+  - kops version
   - ls /
   - ls .
+  - pwd
+
 
 install:
   - echo "Hello World!"
+  - echo $ENV_VAR
