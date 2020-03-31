@@ -1,2 +1,3 @@
-# practice
-A repository for practicing Travis CI builds and how it triggers from GitHub commits
+# Udacity_Projects
+Included is the Project3_submission_document.odt
+
